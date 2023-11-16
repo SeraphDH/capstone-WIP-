@@ -1,0 +1,14 @@
+<h1>Edit World</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post" action="{{ url_for('edit_world', world_id=world.id) }}">
+        <label for="edit_world_name">Name:</label>
+        <input type="text" id="edit_world_name" name="edit_world_name" value="{{ world.name }}" required>
+        <br>
+        <label for="edit_world_description">Description:</label>
+        <textarea id="edit_world_description" name="edit_world_description">{{ world.description }}</textarea>
+        <br>
+        <button type="submit">Save Changes</button>
+    </form>
+{% endblock %}

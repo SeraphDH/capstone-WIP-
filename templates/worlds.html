@@ -1,0 +1,29 @@
+<h1>Worlds</h1>
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- List of worlds with links to their details page -->
+    <ul>
+        {% for world in worlds %}
+            <li>
+                <a href="{{ url_for('world_detail', world_id=world.id) }}">{{ world.name }}</a>
+                <!-- Form for removing the world -->
+                <form method="post" action="{{ url_for('remove_world', world_id=world.id) }}" style="display: inline-block;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Remove</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form for adding a new world -->
+    <form method="post" action="{{ url_for('add_world') }}">
+        <label for="new_world_name">New World Name:</label>
+        <input type="text" id="new_world_name" name="new_world_name" required>
+        <br>
+        <!-- Add more input fields for additional information -->
+        <button type="submit">Add World</button>
+    </form>
+{% endblock %}
+

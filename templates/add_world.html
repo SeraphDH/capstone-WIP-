@@ -1,0 +1,14 @@
+<h1>Add World</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post" action="{{ url_for('add_world') }}">
+        <label for="new_world_name">Name:</label>
+        <input type="text" id="new_world_name" name="new_world_name" required>
+        <br>
+        <label for="new_world_description">Description:</label>
+        <textarea id="new_world_description" name="new_world_description"></textarea>
+        <br>
+        <button type="submit">Add World</button>
+    </form>
+{% endblock %}
