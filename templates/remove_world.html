@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Remove World</h1>
+    <p>Are you sure you want to remove "{{ world.name }}"?</p>
+    
+    <!-- Form for confirming or canceling the removal -->
+    <form method="post">
+        <button type="submit" name="confirm" class="btn btn-danger">Yes</button>
+        <a href="{{ url_for('worlds') }}" class="btn btn-secondary">No</a>
+    </form>
+{% endblock %}

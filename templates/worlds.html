@@ -2,6 +2,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 
     <!-- List of worlds with links to their details page -->
     <ul>
@@ -11,7 +20,7 @@
                 <!-- Form for removing the world -->
                 <form method="post" action="{{ url_for('remove_world', world_id=world.id) }}" style="display: inline-block;">
                     <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit">Remove</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove this world?');">Remove</button>
                 </form>
             </li>
         {% endfor %}

@@ -1,0 +1,24 @@
+<h1>{{ character.name }}</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Description: {{ character.description }}</p>
+
+    <!-- Form for editing the character -->
+    <form method="post" action="{{ url_for('edit_character', character_id=character.id) }}">
+        <label for="edit_character_name">Name:</label>
+        <input type="text" id="edit_character_name" name="edit_character_name" value="{{ character.name }}" required>
+        <br>
+        <label for="edit_character_description">Description:</label>
+        <textarea id="edit_character_description" name="edit_character_description">{{ character.description }}</textarea>
+        <br>
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <!-- Button for removing the character -->
+    <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" onsubmit="return confirm('Are you sure you want to remove this character?');">
+        <button type="submit">Remove Character</button>
+    </form>
+
+    <!-- Add more details and editing options as needed -->
+{% endblock %}

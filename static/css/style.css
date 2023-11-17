@@ -1,0 +1,70 @@
+/* static/css/style.css */
+
+body {
+    margin: 0;
+    padding-top: 15px; /* Adjust the top padding as needed */
+    background-color: #343a40; /* Set background color for every page */
+    color: #fff; /* Set default text color to white */
+    position: relative; /* Set position relative for positioning the button */
+}
+
+h1 {
+    margin: 0;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+.navbar {
+    background-color: black; /* Set a darker background color for the navbar */
+    height: 35px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: lightgrey;
+}
+
+#diceRollerPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #292d32; /* Set background color for the popup */
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+#diceRollerPopup input {
+    width: 200px; /* Adjust the width as needed */
+    padding: 5px;
+    margin-bottom: 10px;
+    resize: none; /* Disable resizing */
+}
+
+#diceRollerBtn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 16px; /* Adjust the font size for a larger button */
+    padding: 10px 20px; /* Adjust padding for a larger button */
+    background-color: #292d32; /* Set background color for the button */
+    color: #fff; /* Set text color for the button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#diceRollerBtn:hover {
+    background-color: #565e64; /* Set background color for the button on hover */
+}

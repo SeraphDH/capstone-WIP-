@@ -10,15 +10,39 @@
         <input type="text" id="edit_world_name" name="edit_world_name" value="{{ world.name }}" required>
         <br>
         <label for="edit_world_description">Description:</label>
-        <textarea id="edit_world_description" name="edit_world_description" required>{{ world.description }}</textarea>
+        <textarea id="edit_world_description" name="edit_world_description">{{ world.description }}</textarea>
         <br>
         <button type="submit">Save Changes</button>
     </form>
 
-    <!-- Form for removing the world -->
+    <!-- Button for removing the world -->
     <form method="post" action="{{ url_for('remove_world', world_id=world.id) }}" onsubmit="return confirm('Are you sure you want to remove this world?');">
         <button type="submit">Remove World</button>
     </form>
 
-    <!-- Add more details and editing options as needed -->
+    <!-- Section for managing characters -->
+    <h2>Characters</h2>
+    <ul>
+        {% for character in world.characters %}
+            <li>
+                <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
+                <!-- Button for removing the character -->
+                <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to remove this character?');">
+                    <button type="submit">Remove Character</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form for adding a new character -->
+    <form method="post" action="{{ url_for('add_character', world_id=world.id) }}">
+        <label for="new_character_name">New Character Name:</label>
+        <input type="text" id="new_character_name" name="new_character_name" required>
+        <br>
+        <label for="new_character_description">New Character Description:</label>
+        <textarea id="new_character_description" name="new_character_description"></textarea>
+        <br>
+        <button type="submit">Add Character</button>
+    </form>
+
 {% endblock %}

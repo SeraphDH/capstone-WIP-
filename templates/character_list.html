@@ -1,0 +1,18 @@
+<h1>Character List</h1>
+{% extends "base.html" %}
+
+{% block content %}
+
+    <ul>
+        {% for character in characters %}
+            <li>
+                <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
+                <!-- Button for removing the character -->
+                <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to remove this character?');">
+                    <button type="submit">Remove Character</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
