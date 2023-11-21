@@ -1,0 +1,26 @@
+<!-- profile.html -->
+<h1>Profile</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Edit Username</h3>
+    <form method="post" action="{{ url_for('profile') }}">
+        {{ edit_profile_form.hidden_tag() }}
+        {{ edit_profile_form.new_username.label }}
+        {{ edit_profile_form.new_username(class="form-control") }}
+        {{ edit_profile_form.submit(class="btn btn-primary mt-2") }}
+    </form>
+
+    <h3>Change Password</h3>
+    <form method="post" action="{{ url_for('profile') }}">
+        {{ change_password_form.hidden_tag() }}
+        {{ change_password_form.current_password.label }}
+        {{ change_password_form.current_password(class="form-control") }}
+        {{ change_password_form.new_password.label }}
+        {{ change_password_form.new_password(class="form-control") }}
+        {{ change_password_form.confirm_new_password.label }}
+        {{ change_password_form.confirm_new_password(class="form-control") }}
+        {{ change_password_form.submit(class="btn btn-primary mt-2") }}
+    </form>
+{% endblock %}
+
