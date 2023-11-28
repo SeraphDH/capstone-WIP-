@@ -10,11 +10,12 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('worlds') }}">Worlds</a>
-        <a href="{{ url_for('character_list') }}">Characters</a>
-        <div class="navbar-links">
+    <div class="navbar">
+        <span class="navbar-icon" onclick="toggleNavbar()">☰</span>
+        <div class="navbar-links" id="navbarLinks">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('worlds') }}">Worlds</a>
+            <a href="{{ url_for('character_list') }}">Characters</a>
             {% if current_user.is_authenticated %}
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
@@ -22,7 +23,7 @@
                 <a href="{{ url_for('register') }}">Register</a>
             {% endif %}
         </div>
-    </nav>
+    </div>
 
     <!-- Flash Messages -->
     <div class="flash-messages">
@@ -45,7 +46,6 @@
     <!-- Profile Button -->
     {% if current_user.is_authenticated %}
         <a href="{{ url_for('profile') }}" class="profile-button">{{ current_user.username }}'s Profile</a>
-
     {% endif %}
 
     <!-- Include the diceRoller.html content -->
@@ -53,6 +53,13 @@
 
     <!-- Include the diceRoller.js script -->
     <script src="{{ url_for('static', filename='js/diceRoller.js') }}"></script>
+
+    <!-- Toggle Navbar Script -->
+    <script>
+        function toggleNavbar() {
+            var navbarLinks = document.getElementById("navbarLinks");
+            navbarLinks.classList.toggle("expanded");
+        }
+    </script>
 </body>
 </html>
-

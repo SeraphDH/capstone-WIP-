@@ -1,3 +1,5 @@
+/* style.css */
+
 body {
     margin: 0;
     padding: 0;
@@ -15,13 +17,13 @@ h1 {
     height: 35px;
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 10px; /* Adjusted padding for smaller screens */
 }
 
 .navbar a {
     color: #fff;
     text-decoration: none;
-    margin: 10px;
+    margin: 5px; /* Adjusted margin for smaller screens */
     transition: color 0.3s ease;
 }
 
@@ -36,11 +38,19 @@ h1 {
 .navbar-links {
     margin-left: auto;
     display: flex;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Added transition for smooth animation */
+    max-height: 0;
+}
+
+.navbar-links.expanded {
+    max-height: 200px; /* Adjust the maximum height as needed */
 }
 
 .container {
     margin-top: 20px;
 }
+
 
 #diceRollerPopup {
     display: none;
@@ -54,7 +64,7 @@ h1 {
 }
 
 #diceRollerPopup input {
-    width: 200px;
+    width: 100%; /* Adjusted width for better responsiveness */
     padding: 5px;
     margin-bottom: 10px;
     resize: none;
