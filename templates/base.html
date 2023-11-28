@@ -10,8 +10,8 @@
 </head>
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <span class="navbar-icon" onclick="toggleNavbar()">☰</span>
+    <div class="desktop navbar">
+        <!-- <span class="navbar-icon" onclick="toggleNavbar()">☰</span> -->
         <div class="navbar-links" id="navbarLinks">
             <a href="{{ url_for('index') }}">Home</a>
             <a href="{{ url_for('worlds') }}">Worlds</a>
@@ -23,6 +23,24 @@
                 <a href="{{ url_for('register') }}">Register</a>
             {% endif %}
         </div>
+    </div>
+    <div class="mobile-nav-container">
+        <div class="navbar">
+            <span id="mobile-trigger" class="navbar-icon">☰</span>
+        </div>
+    </div>
+    <div id="mobile-nav-panel">
+        
+        <span id="mobile-exit" class="navbar-icon">X</span>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('worlds') }}">Worlds</a>
+        <a href="{{ url_for('character_list') }}">Characters</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
     </div>
 
     <!-- Flash Messages -->
@@ -52,14 +70,34 @@
     {% include 'diceRoller.html' %}
 
     <!-- Include the diceRoller.js script -->
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/diceRoller.js') }}"></script>
-
-    <!-- Toggle Navbar Script -->
+    <!-- custom shiz -->
     <script>
-        function toggleNavbar() {
-            var navbarLinks = document.getElementById("navbarLinks");
-            navbarLinks.classList.toggle("expanded");
+        function openPanel() {
+            jQuery('#mobile-trigger').addClass('active');
+            jQuery('#mobile-nav-panel').addClass('active');
         }
+        function closePanel() {
+            if (jQuery('#mobile-nav-panel').hasClass('active')) {
+                jQuery('#mobile-nav-panel').removeClass('active');
+            }
+        }
+        jQuery('#mobile-trigger').on('click', function(e) {
+            jQuery(this).toggleClass('active');
+            if (jQuery('#mobile-nav-panel').hasClass('active')) {
+                closePanel();
+            } else {
+               openPanel();
+            }
+        })
+        jQuery('#mobile-exit').on('click', function(e) {
+            closePanel();
+        })
     </script>
+    
 </body>
 </html>

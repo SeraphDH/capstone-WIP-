@@ -40,7 +40,31 @@ h1 {
     display: flex;
     overflow: hidden;
     transition: max-height 0.3s ease-out; /* Added transition for smooth animation */
-    max-height: 0;
+}
+@media screen and (min-width: 768px) {
+    .mobile-nav-container { display: none; }
+}
+
+@media screen and (max-width: 767px) {
+    .navbar.desktop { display: none; }
+}
+
+#mobile-trigger.active {
+    font-weight: bold;
+}
+
+#mobile-nav-panel {
+    display: none;
+    background: white;
+}
+        
+#mobile-nav-panel.active {
+    display: block;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    top: 0;
 }
 
 .navbar-links.expanded {
