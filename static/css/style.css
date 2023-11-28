@@ -165,3 +165,22 @@ h1 {
 .profile-button:hover {
     background-color: #565e64;
 }
+
+/* Adjust the margin-top value as needed */
+.homepage-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This ensures the container takes the full height of the viewport */
+    margin-top: -15vh; /* Adjust this value to position the container higher or lower */
+}
+
+.homepage_greeting {
+    max-width: 600px; /* Adjust as needed */
+    text-align: center;
+    padding: 20px;
+    background-color: #292d32;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow */
+}
+
