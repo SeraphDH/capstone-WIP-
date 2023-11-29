@@ -30,18 +30,19 @@
         </div>
     </div>
     <div id="mobile-nav-panel">
-        
         <span id="mobile-exit" class="navbar-icon">X</span>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('worlds') }}">Worlds</a>
-        <a href="{{ url_for('character_list') }}">Characters</a>
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('register') }}">Register</a>
-        {% endif %}
-    </div>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('worlds') }}">Worlds</a></li>
+            <li><a href="{{ url_for('character_list') }}">Characters</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>    
 
     <!-- Flash Messages -->
     <div class="flash-messages">

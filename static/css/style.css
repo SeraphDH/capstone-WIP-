@@ -31,15 +31,10 @@ h1 {
     color: lightgrey;
 }
 
-.brand {
-    margin-right: auto;
-}
-
 .navbar-links {
     margin-left: auto;
     display: flex;
     overflow: hidden;
-    transition: max-height 0.3s ease-out; /* Added transition for smooth animation */
 }
 @media screen and (min-width: 768px) {
     .mobile-nav-container { display: none; }
@@ -51,20 +46,57 @@ h1 {
 
 #mobile-trigger.active {
     font-weight: bold;
+    color: white
 }
 
 #mobile-nav-panel {
     display: none;
-    background: white;
+    background: black;
 }
         
 #mobile-nav-panel.active {
     display: block;
     position: absolute;
-    width: 100%;
+    width: 50%;
     left: 0;
     height: 100%;
     top: 0;
+}
+
+#mobile-exit {
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#mobile-exit:hover {
+    color: lightgrey;
+}
+
+/* Add these styles for the mobile navigation buttons */
+#mobile-nav-panel ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+#mobile-nav-panel li {
+    margin-bottom: 5px;
+}
+
+#mobile-nav-panel li a {
+    display: block;
+    padding: 10px;
+    background-color: #292d32;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#mobile-nav-panel li a:hover {
+    background-color: #565e64;
 }
 
 .navbar-links.expanded {
@@ -171,8 +203,6 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* This ensures the container takes the full height of the viewport */
-    margin-top: -15vh; /* Adjust this value to position the container higher or lower */
 }
 
 .homepage_greeting {
