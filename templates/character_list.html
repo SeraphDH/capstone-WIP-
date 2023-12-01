@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <ul>
+    <ul class="character-list">
         {% for character in characters %}
             <li>
                 <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
