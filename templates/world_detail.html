@@ -2,47 +2,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>Description: {{ world.description }}</p>
+    <div class="world-detail">
+        <h1>{{ world.name }}</h1>
+        <p class="world-description">Description: {{ world.description }}</p>
 
-    <!-- Form for editing the world -->
-    <form method="post" action="{{ url_for('edit_world', world_id=world.id) }}">
-        <label for="edit_world_name">Name:</label>
-        <input type="text" id="edit_world_name" name="edit_world_name" value="{{ world.name }}" required>
-        <br>
-        <label for="edit_world_description">Description:</label>
-        <textarea id="edit_world_description" name="edit_world_description">{{ world.description }}</textarea>
-        <br>
-        <button type="submit">Save Changes</button>
-    </form>
+        <!-- Form for editing the world -->
+        <form class="edit-form" method="post" action="{{ url_for('edit_world', world_id=world.id) }}">
+            <label for="edit_world_name">Name:</label>
+            <input type="text" id="edit_world_name" name="edit_world_name" value="{{ world.name }}" required>
+            <br>
+            <label for="edit_world_description">Description:</label>
+            <textarea id="edit_world_description" name="edit_world_description">{{ world.description }}</textarea>
+            <br>
+            <button type="submit" class="edit-button">Save Changes</button>
+        </form>
 
-    <!-- Button for removing the world -->
-    <form method="post" action="{{ url_for('remove_world', world_id=world.id) }}" onsubmit="return confirm('Are you sure you want to remove this world?');">
-        <button type="submit">Remove World</button>
-    </form>
+        <!-- Button for removing the world -->
+        <form method="post" action="{{ url_for('remove_world', world_id=world.id) }}" onsubmit="return confirm('Are you sure you want to remove this world?');">
+            <button type="submit" class="remove-button">Remove World</button>
+        </form>
 
-    <!-- Section for managing characters -->
-    <h2>Characters</h2>
-    <ul>
-        {% for character in world.characters %}
-            <li>
-                <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
-                <!-- Button for removing the character -->
-                <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to remove this character?');">
-                    <button type="submit">Remove Character</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+        <!-- Section for managing characters -->
+        <h2>Characters</h2>
+        <ul class="character-list">
+            {% for character in world.characters %}
+                <li class="character-item">
+                    <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
+                    <!-- Button for removing the character -->
+                    <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to remove this character?');">
+                        <button type="submit" class="remove-button">Remove Character</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <!-- Form for adding a new character -->
-    <form method="post" action="{{ url_for('add_character', world_id=world.id) }}">
-        <label for="new_character_name">New Character Name:</label>
-        <input type="text" id="new_character_name" name="new_character_name" required>
-        <br>
-        <label for="new_character_description">New Character Description:</label>
-        <textarea id="new_character_description" name="new_character_description"></textarea>
-        <br>
-        <button type="submit">Add Character</button>
-    </form>
+        <form class="random-name-form" method="post" action="{{ url_for('random_name', world_id=world.id) }}">
+            <p>Looking for name ideas?</p>
+            <input type="text" id="race" name="race">
+            <button type="submit" class="random-name-button">Click Here!</button>
+        </form>
 
+        {% if name %}
+            <p class="generated-name">{{name}}</p>
+        {% else %}
+            <p>Generate your name now.</p>
+        {% endif %}
+
+        <!-- Form for adding a new character -->
+        <form class="add-character-form" method="post" action="{{ url_for('add_character', world_id=world.id) }}">
+            <label for="new_character_name">New Character Name:</label>
+            <input type="text" id="new_character_name" name="new_character_name" required>
+            <br>
+            <label for="new_character_description">New Character Description:</label>
+            <textarea id="new_character_description" name="new_character_description"></textarea>
+            <br>
+            <button type="submit" class="add-character-button">Add Character</button>
+        </form>
+    </div>
 {% endblock %}

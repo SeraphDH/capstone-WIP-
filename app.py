@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 from models import db, World, Character, User
 from forms import RegistrationForm, EditProfileForm, ChangePasswordForm
+import requests
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -167,6 +168,21 @@ def world_detail(world_id):
 
     flash('You do not have permission to view this world.', 'error')
     return redirect(url_for('worlds'))
+
+@app.route('/random_name/<int:world_id>', methods=['POST'])
+@login_required
+def random_name(world_id):
+    world = World.query.get(world_id)
+    if request.method == 'POST':
+        race = request.form.get('race')
+        response = requests.get(f'http://127.0.0.1:5001/name_gen/{race}')
+        if response.status_code == 404:
+            flash("That Race does not exist! Try again!", 'error')
+            return render_template('world_detail.html', world=world)
+        else:
+            name = response.content.decode('UTF-8')
+            return render_template('world_detail.html', world=world, name=name)
+
 
 @app.route('/add_character/<int:world_id>', methods=['POST'])
 @login_required

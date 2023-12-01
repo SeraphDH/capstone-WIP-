@@ -214,12 +214,170 @@ h1 {
 }
 
 .homepage_greeting {
-    max-width: 600px; /* Adjust as needed */
+    max-width: 600px; 
     min-width: 75px;
     text-align: center;
     padding: 20px;
     background-color: #292d32;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Add new styles for the world detail page */
+.world-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.world-detail h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.world-description {
+    font-size: 1.1em;
+}
+
+.edit-form,
+.random-name-button,
+.add-character-form button {
+    background-color: #232222;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.remove-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding-bottom: 4px; /* Adjusted padding for 75% size */
+    padding-top: 5px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.edit-form input,
+.edit-form textarea,
+.add-character-form input,
+.add-character-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #292d32;
+}
+
+.remove-button:hover,
+.random-name-button:hover,
+.add-character-form button:hover {
+    background-color: #7b8288;
+}
+
+.character-list {
+    list-style: none;
+    padding: 0;
+}
+
+.character-item {
+    margin-bottom: 10px;
+}
+
+.generated-name {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Additional styling for forms */
+form {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.world_container {
+    max-width: 1000px;
+    min-width: none;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.world_container ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+.world_container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Adjusted align-items property */
+    margin-bottom: 10px;
+}
+
+.world_container li a {
+    flex: 1;
+    display: block;
+    padding: 4px;
+    background-color: #292d32;
+    color: #fff;
+    text-decoration: none;
+    font-size: large;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.world_container li a:hover {
+    background-color: #232222;
+}
+
+.world_container form {
+    margin-left: 10px;
+}
+
+.world_container button[name="delete"] {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding-bottom: 4px; /* Adjusted padding for 75% size */
+    padding-top: 5px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.world_container button[name="delete"]:hover {
+    background-color: #c82333;
+}
+
+.world_container button[name="add"] {
+    background-color: #232222;
+    color: #fff;
+    border: none;
+    padding-bottom: 4px; /* Adjusted padding for 75% size */
+    padding-top: 5px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
 
