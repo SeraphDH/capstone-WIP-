@@ -29,6 +29,7 @@ class World(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     characters = db.relationship('Character', backref='world', lazy=True)
+    plots = db.relationship('PlotData', backref='world', lazy=True)
 
 
 class Character(db.Model):
@@ -50,3 +51,4 @@ class PlotData(db.Model):
     fun_twists = db.Column(db.Text, nullable=True)
     big_bad_evil_guy = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    world_id = db.Column(db.Integer, db.ForeignKey('world.id'), nullable=False)

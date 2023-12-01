@@ -21,5 +21,9 @@ def name_gen(race):
     else:
         abort(404)
 
+@app.route('/races', methods=['GET'])
+def get_races():
+    return list(race2names.keys())
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

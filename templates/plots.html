@@ -1,55 +1,37 @@
-<!-- plots.html -->
+
 <h1>Plots</h1>
 {% extends 'base.html' %}
 
 {% block content %}
     <div class="plots_container">
-        <form class="main_quest_form" method="post">
-            {{ main_quest_form.hidden_tag() }}
-            <label>Main Quests:</label>
-            <br>
-            {{ main_quest_form.main_quests() }}
-            <button type="submit">Save</button>
+        <h2>
+            {% if current_world %}
+                {{current_world.name}} Plots
+            {% else %}
+                Please Select World
+            {% endif %}
+        </h2>
+        <form action="/plots" class="select_world_form" method="post">
+            <select name="select_world">
+                {% for world in worlds %}
+                    {% if current_world and world.id == current_world.id %}
+                        <option value={{world.id}} selected="true">
+                    {% else %}
+                        <option value={{world.id}}>
+                    {% endif %}
+                        {{world.name}}
+                        </option>
+                {% endfor %}
+            </select>
+            <button type="submit"></button>
         </form>
-
-        <form class="side_quest_form" method="post">
-            {{ side_quest_form.hidden_tag() }}
-            <label>Side Quests:</label>
+        {% if current_world %}
+        <form class="plots_data" action="/update_plot_data/{{current_world.id}}" method="post">
+            <label>Main Quests</label>
             <br>
-            {{ side_quest_form.side_quests() }}
-            <button type="submit">Save</button>
+            <input type="text" id="main_quests" name="main_quests">
+            <button type="submit" id="submit_main_quests" name="submit_main_quests">Submit</button>
         </form>
-
-        <form class="plot_hooks_form" method="post">
-            {{ plot_hooks_form.hidden_tag() }}
-            <label>Plot Hooks:</label>
-            <br>
-            {{ plot_hooks_form.plot_hooks() }}
-            <button type="submit">Save</button>
-        </form>
-
-        <form class="character_quests_form" method="post">
-            {{ character_quests_form.hidden_tag() }}
-            <label>Character Quests:</label>
-            <br>
-            {{ character_quests_form.character_quests() }}
-            <button type="submit">Save</button>
-        </form>
-
-        <form class="fun_twists_form" method="post">
-            {{ fun_twists_form.hidden_tag() }}
-            <label>Fun Twists:</label>
-            <br>
-            {{ fun_twists_form.fun_twists() }}
-            <button type="submit">Save</button>
-        </form>
-
-        <form class="big_bad_evil_guy_form" method="post">
-            {{ big_bad_evil_guy_form.hidden_tag() }}
-            <label>Big Bad Evil Guy:</label>
-            <br>
-            {{ big_bad_evil_guy_form.big_bad_evil_guy() }}
-            <button type="submit">Save</button>
-        </form>
+        {% endif %}
     </div>
 {% endblock %}

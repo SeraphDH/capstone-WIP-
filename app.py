@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 from models import *
 from forms import *
-import requests
+import requests, json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -16,6 +16,8 @@ bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+races_as_bytes = requests.get('http://127.0.0.1:5001/races').content
+races = json.loads(races_as_bytes.decode('UTF-8'))
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -164,24 +166,23 @@ def world_detail(world_id):
                     db.session.rollback()
                     flash('Error removing world. Please try again.', 'error')
 
-        return render_template('world_detail.html', world=world)
+        return render_template('world_detail.html', world=world, races=races)
 
     flash('You do not have permission to view this world.', 'error')
     return redirect(url_for('worlds'))
 
-@app.route('/random_name/<int:world_id>', methods=['POST'])
+@app.route('/random_name', methods=['POST'])
 @login_required
-def random_name(world_id):
-    world = World.query.get(world_id)
+def random_name():
     if request.method == 'POST':
         race = request.form.get('race')
         response = requests.get(f'http://127.0.0.1:5001/name_gen/{race}')
         if response.status_code == 404:
             flash("That Race does not exist! Try again!", 'error')
-            return render_template('world_detail.html', world=world)
+            return redirect('/characters')
         else:
             name = response.content.decode('UTF-8')
-            return render_template('world_detail.html', world=world, name=name)
+            return redirect(url_for('character_list', name=name))
 
 
 @app.route('/add_character/', methods=['POST'])
@@ -244,7 +245,11 @@ def remove_character(character_id):
 @login_required
 def character_list():
     characters = Character.query.all()
-    return render_template('character_list.html', characters=characters)
+    name = request.args.get('name')
+    if name:
+        return render_template('character_list.html', characters=characters, races=races, name=name)
+    else:
+        return render_template('character_list.html', characters=characters, races=races)
 
 @app.route('/edit_character/<int:character_id>', methods=['GET', 'POST'])
 @login_required
@@ -272,55 +277,29 @@ def edit_character(character_id):
 @app.route('/plots', methods=['GET', 'POST'])
 @login_required
 def plots():
-    # Create an instance of each form
-    main_quest_form = MainQuestForm()
-    side_quest_form = SideQuestForm()
-    plot_hooks_form = PlotHooksForm()
-    character_quests_form = CharacterQuestsForm()
-    fun_twists_form = FunTwistsForm()
-    big_bad_evil_guy_form = BigBadEvilGuyForm()
-
-    # Handle form submissions
+    worlds = World.query.all()
     if request.method == 'POST':
-        save_plot_data(main_quest_form)
-        save_plot_data(side_quest_form)
-        save_plot_data(plot_hooks_form)
-        save_plot_data(character_quests_form)
-        save_plot_data(fun_twists_form)
-        save_plot_data(big_bad_evil_guy_form)
-
-    # Pass the forms to the template
-    return render_template(
-        'plots.html',
-        main_quest_form=main_quest_form,
-        side_quest_form=side_quest_form,
-        plot_hooks_form=plot_hooks_form,
-        character_quests_form=character_quests_form,
-        fun_twists_form=fun_twists_form,
-        big_bad_evil_guy_form=big_bad_evil_guy_form
-    )
-
-def save_plot_data(form):
-    if form.validate_on_submit():
-        # Create an instance of your PlotData model and populate it with form data
-        plot_data = PlotData(
-            user_id=current_user.id,  # Assuming you have a user_id in your PlotData model
-            main_quests=form.main_quests.data,
-            side_quests=form.side_quests.data,
-            plot_hooks=form.plot_hooks.data,
-            character_quests=form.character_quests.data,
-            fun_twists=form.fun_twists.data,
-            big_bad_evil_guy=form.big_bad_evil_guy.data
-        )
-
-        # Save the plot data to the database
-        db.session.add(plot_data)
-        db.session.commit()
-
-        flash('Plot data saved successfully!', 'success')
+        world_id = request.form.get('select_world')
+        return redirect(url_for('plots', world_id=world_id))
     else:
-        flash('Error saving plot data. Please check your input.', 'error')
+        world_id = request.args.get('world_id')
+        if world_id:
+            world = World.query.get(world_id)
+            return render_template('plots.html', worlds=worlds, current_world = world)
+        else:
+            return render_template('plots.html', worlds=worlds)
 
+@app.route('/update_plot_data/<world_id>', methods = ['POST'])
+@login_required
+def update_plot_data(world_id):
+    world = World.query.get(world_id)
+    if request.method == 'POST':
+        main_quest = request.form.get('main_quests')
+        # plot_data = PlotData.query.get(world.plots.id)
+        # check for existing plot data, if exists then update it, else create a new one from scratch.
+        return redirect(url_for('plots', world_id))
+    else:
+        return redirect(url_for('plots', world_id))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

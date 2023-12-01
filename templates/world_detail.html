@@ -3,7 +3,6 @@
 
 {% block content %}
     <div class="world-detail">
-        <h1>{{ world.name }}</h1>
         <p class="world-description">Description: {{ world.description }}</p>
 
         <!-- Form for editing the world -->
@@ -35,28 +34,5 @@
                 </li>
             {% endfor %}
         </ul>
-
-        <form class="random-name-form" method="post" action="{{ url_for('random_name', world_id=world.id) }}">
-            <p>Looking for name ideas?</p>
-            <input type="text" id="race" name="race">
-            <button type="submit" class="random-name-button">Click Here!</button>
-        </form>
-
-        {% if name %}
-            <p class="generated-name">{{name}}</p>
-        {% else %}
-            <p>Generate your name now.</p>
-        {% endif %}
-
-        <!-- Form for adding a new character -->
-        <form class="add-character-form" method="post" action="{{ url_for('add_character', world_id=world.id) }}">
-            <label for="new_character_name">New Character Name:</label>
-            <input type="text" id="new_character_name" name="new_character_name" required>
-            <br>
-            <label for="new_character_description">New Character Description:</label>
-            <textarea id="new_character_description" name="new_character_description"></textarea>
-            <br>
-            <button type="submit" class="add-character-button">Add Character</button>
-        </form>
     </div>
 {% endblock %}
