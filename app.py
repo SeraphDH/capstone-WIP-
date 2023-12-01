@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
-from models import db, World, Character, User
-from forms import RegistrationForm, EditProfileForm, ChangePasswordForm
+from models import *
+from forms import *
 import requests
 
 app = Flask(__name__)
@@ -184,9 +184,10 @@ def random_name(world_id):
             return render_template('world_detail.html', world=world, name=name)
 
 
+@app.route('/add_character/', methods=['POST'])
 @app.route('/add_character/<int:world_id>', methods=['POST'])
 @login_required
-def add_character(world_id):
+def add_character(world_id=None):
     if request.method == 'POST':
         new_character_name = request.form.get('new_character_name')
         new_character_description = request.form.get('new_character_description')
@@ -195,7 +196,7 @@ def add_character(world_id):
             new_character = Character(
                 name=new_character_name,
                 description=new_character_description,
-                world_id=world_id,
+                world_id=world_id if world_id is not None else None,
                 user_id=current_user.id
             )
 
@@ -207,7 +208,10 @@ def add_character(world_id):
                 db.session.rollback()
                 flash('Error adding character. Please try again.', 'error')
 
-            return redirect(url_for('world_detail', world_id=world_id))
+            if world_id is not None:
+                return redirect(url_for('world_detail', world_id=world_id))
+            else:
+                return redirect(url_for('character_list'))  # Update with the actual endpoint for your character list page
 
     return render_template('add_character.html', world_id=world_id)
 
@@ -264,6 +268,59 @@ def edit_character(character_id):
 
     flash('You do not have permission to edit this character.', 'error')
     return redirect(url_for('character_list'))
+
+@app.route('/plots', methods=['GET', 'POST'])
+@login_required
+def plots():
+    # Create an instance of each form
+    main_quest_form = MainQuestForm()
+    side_quest_form = SideQuestForm()
+    plot_hooks_form = PlotHooksForm()
+    character_quests_form = CharacterQuestsForm()
+    fun_twists_form = FunTwistsForm()
+    big_bad_evil_guy_form = BigBadEvilGuyForm()
+
+    # Handle form submissions
+    if request.method == 'POST':
+        save_plot_data(main_quest_form)
+        save_plot_data(side_quest_form)
+        save_plot_data(plot_hooks_form)
+        save_plot_data(character_quests_form)
+        save_plot_data(fun_twists_form)
+        save_plot_data(big_bad_evil_guy_form)
+
+    # Pass the forms to the template
+    return render_template(
+        'plots.html',
+        main_quest_form=main_quest_form,
+        side_quest_form=side_quest_form,
+        plot_hooks_form=plot_hooks_form,
+        character_quests_form=character_quests_form,
+        fun_twists_form=fun_twists_form,
+        big_bad_evil_guy_form=big_bad_evil_guy_form
+    )
+
+def save_plot_data(form):
+    if form.validate_on_submit():
+        # Create an instance of your PlotData model and populate it with form data
+        plot_data = PlotData(
+            user_id=current_user.id,  # Assuming you have a user_id in your PlotData model
+            main_quests=form.main_quests.data,
+            side_quests=form.side_quests.data,
+            plot_hooks=form.plot_hooks.data,
+            character_quests=form.character_quests.data,
+            fun_twists=form.fun_twists.data,
+            big_bad_evil_guy=form.big_bad_evil_guy.data
+        )
+
+        # Save the plot data to the database
+        db.session.add(plot_data)
+        db.session.commit()
+
+        flash('Plot data saved successfully!', 'success')
+    else:
+        flash('Error saving plot data. Please check your input.', 'error')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

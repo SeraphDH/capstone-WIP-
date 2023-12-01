@@ -1,5 +1,4 @@
 # models.py
-
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -14,6 +13,7 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     worlds = db.relationship('World', backref='creator', lazy=True)
     characters = db.relationship('Character', backref='user', lazy=True)
+    plot_data = db.relationship('PlotData', backref='user', lazy=True)  # Added relationship to PlotData
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -37,4 +37,16 @@ class Character(db.Model):
     description = db.Column(db.Text)
     world_id = db.Column(db.Integer, db.ForeignKey('world.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class PlotData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    main_quests = db.Column(db.Text, nullable=True)
+    side_quests = db.Column(db.Text, nullable=True)
+    plot_hooks = db.Column(db.Text, nullable=True)
+    character_quests = db.Column(db.Text, nullable=True)
+    fun_twists = db.Column(db.Text, nullable=True)
+    big_bad_evil_guy = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

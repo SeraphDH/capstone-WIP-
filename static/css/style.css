@@ -216,7 +216,7 @@ h1 {
     font-size: 1.1em;
 }
 
-.edit-form, .random-name-button, .add-character-form button, .remove-button {
+.edit-form, .random-name-button, .add-character-form button, .add-world-form button, .remove-button {
     background-color: #232222;
     color: #fff;
     border: none;
@@ -233,7 +233,7 @@ h1 {
     padding-top: 5px;
 }
 
-.edit-form input, .edit-form textarea, .add-character-form input, .add-character-form textarea {
+.edit-form input, .edit-form textarea, .add-character-form input, .add-character-form textarea, .add-world-form input, .add-world-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -243,7 +243,7 @@ h1 {
     color: #292d32;
 }
 
-.remove-button:hover, .random-name-button:hover, .add-character-form button:hover {
+.remove-button:hover, .random-name-button:hover, .add-character-form button:hover, add-world-form button:hover {
     background-color: #7b8288;
 }
 
@@ -358,4 +358,91 @@ h1 {
 
 .world_container button[name="add"]:hover {
     background-color: #565e64;
+}
+
+.character_container {
+    max-width: 1000px;
+    min-width: none;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.character_container ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+.character_container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.character_container li a {
+    flex: 1;
+    display: block;
+    padding: 4px;
+    background-color: #292d32;
+    color: #fff;
+    text-decoration: none;
+    font-size: large;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.character_container li a:hover {
+    background-color: #232222;
+}
+
+.character_container form {
+    margin-left: 10px;
+}
+
+.character_container button[name="delete"], .world_container button[name="add"] {
+    background-color: #232222;
+    color: #fff;
+    border: none;
+    padding-bottom: 4px;
+    padding-top: 5px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.character_container button[name="delete"]:hover {
+    background-color: #c82333;
+}
+
+.character_container button[name="add"]:hover {
+    background-color: #565e64;
+}
+
+.plots_container {
+    max-width: 1000px;
+    min-width: none;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.plots_container form {
+    margin-left: 10px auto;
+    padding: 10px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.plots_container form label {
+    font-size: larger;
 }

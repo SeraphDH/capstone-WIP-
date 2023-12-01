@@ -17,7 +17,7 @@
         </ul>
 
         <!-- Form for adding a new world -->
-        <form method="post" action="{{ url_for('add_world') }}">
+        <form class="add-world-form" method="post" action="{{ url_for('add_world') }}">
             <label for="new_world_name">Create New World:</label>
             <input type="text" id="new_world_name" name="new_world_name" placeholder="Enter World Name" required>
             <br>
