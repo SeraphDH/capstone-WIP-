@@ -3,7 +3,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <form method="POST" action="{{ url_for('register') }}">
+<div class="container">
+  <form method="POST" action="{{ url_for('register') }}" class="edit-form">
     {{ form.hidden_tag() }}
     <div>
       {{ form.username.label }}
@@ -18,7 +19,9 @@
       {{ form.confirm_password }}
     </div>
     <div>
-      <button type="submit">Register</button>
+      <button type="submit" class="add-character-form-button">Register</button>
     </div>
   </form>
+</div>
+
 {% endblock %}

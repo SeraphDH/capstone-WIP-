@@ -212,8 +212,8 @@ def add_character(world_id=None):
             if world_id is not None:
                 return redirect(url_for('world_detail', world_id=world_id))
             else:
-                return redirect(url_for('character_list'))  # Update with the actual endpoint for your character list page
-
+                return redirect(url_for('character_list')) 
+            
     return render_template('add_character.html', world_id=world_id)
 
 @app.route('/character_detail/<int:character_id>')
@@ -289,17 +289,27 @@ def plots():
         else:
             return render_template('plots.html', worlds=worlds)
 
-@app.route('/update_plot_data/<world_id>', methods = ['POST'])
+@app.route('/update_plot_data/<world_id>', methods=['POST'])
 @login_required
 def update_plot_data(world_id):
     world = World.query.get(world_id)
+    
     if request.method == 'POST':
         main_quest = request.form.get('main_quests')
-        # plot_data = PlotData.query.get(world.plots.id)
-        # check for existing plot data, if exists then update it, else create a new one from scratch.
-        return redirect(url_for('plots', world_id))
+        
+        plot_data = PlotData.query.filter_by(world_id=world.id).first()
+
+        if plot_data:
+            plot_data.main_quests = main_quest
+        else:
+            plot_data = PlotData(main_quests=main_quest, world=world)
+
+        db.session.add(plot_data)
+        db.session.commit()
+
+        return redirect(url_for('plots', world_id=world_id))
     else:
-        return redirect(url_for('plots', world_id))
+        return redirect(url_for('plots', world_id=world_id))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

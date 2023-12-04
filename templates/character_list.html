@@ -26,7 +26,13 @@
             <select id="world_id" name="world_id">
                 <option value="" selected>Not associated with any world</option>
                 {% for world in worlds %}
-                    <option value="{{ world.id }}">{{ world.name }}</option>
+                    {% if current_world and world.id == current_world.id %}
+                        <option value={{world.id}} selected="true">
+                    {% else %}
+                        <option value={{world.id}}>
+                    {% endif %}
+                        {{world.name}}
+                        </option>
                 {% endfor %}
             </select>
             <br>

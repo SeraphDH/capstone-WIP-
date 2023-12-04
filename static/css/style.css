@@ -89,7 +89,14 @@ h1 {
     max-height: 200px;
 }
 
-.container { margin-top: 20px; }
+.container { 
+    max-width: 900px; /* Adjust the width as per your preference */
+    margin: 20px auto; /* Center the container horizontally */
+    padding: 20px;
+    background-color: #292d32;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
 #diceRollerPopup {
     display: none;

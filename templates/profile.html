@@ -3,16 +3,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <h3>Edit Username</h3>
-    <form method="post" action="{{ url_for('profile') }}">
+    <form method="post" action="{{ url_for('profile') }}" class="edit-form">
         {{ edit_profile_form.hidden_tag() }}
         {{ edit_profile_form.new_username.label }}
         {{ edit_profile_form.new_username(class="form-control") }}
-        {{ edit_profile_form.submit(class="btn btn-primary mt-2") }}
+        {{ edit_profile_form.submit(class="add-character-form-button") }}
     </form>
 
     <h3>Change Password</h3>
-    <form method="post" action="{{ url_for('profile') }}">
+    <form method="post" action="{{ url_for('profile') }}" class="edit-form">
         {{ change_password_form.hidden_tag() }}
         {{ change_password_form.current_password.label }}
         {{ change_password_form.current_password(class="form-control") }}
@@ -20,7 +21,9 @@
         {{ change_password_form.new_password(class="form-control") }}
         {{ change_password_form.confirm_new_password.label }}
         {{ change_password_form.confirm_new_password(class="form-control") }}
-        {{ change_password_form.submit(class="btn btn-primary mt-2") }}
+        {{ change_password_form.submit(class="add-character-form-button") }}
     </form>
+</div>
+
 {% endblock %}
 

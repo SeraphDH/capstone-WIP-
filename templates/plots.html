@@ -26,12 +26,12 @@
             <button type="submit"></button>
         </form>
         {% if current_world %}
-        <form class="plots_data" action="/update_plot_data/{{current_world.id}}" method="post">
-            <label>Main Quests</label>
-            <br>
-            <input type="text" id="main_quests" name="main_quests">
-            <button type="submit" id="submit_main_quests" name="submit_main_quests">Submit</button>
-        </form>
+            <form class="plots_data" action="/update_plot_data/{{current_world.id}}" method="post">
+                <label>Main Quests</label>
+                <br>
+                <input type="text" id="main_quests" name="main_quests">
+                <button type="submit" id="submit_main_quests" name="submit_main_quests">Submit</button>
+            </form>
         {% endif %}
     </div>
 {% endblock %}

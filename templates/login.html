@@ -5,13 +5,15 @@
 {% block title %}Login - Dungeon Master's Companion{% endblock %}
 
 {% block content %}
-    <form method="POST" action="{{ url_for('login') }}">
+<div class="container">
+    <form method="POST" action="{{ url_for('login') }}" class="edit-form">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         <br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <button type="submit">Login</button>
+        <button type="submit" class="add-character-form-button">Login</button>
     </form>
+</div>
 {% endblock %}
