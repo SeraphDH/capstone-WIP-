@@ -186,30 +186,32 @@ def random_name():
 
 
 @app.route('/add_character/', methods=['POST'])
-@app.route('/add_character/<int:world_id>', methods=['POST'])
 @login_required
-def add_character(world_id=None):
+def add_character():
     if request.method == 'POST':
         new_character_name = request.form.get('new_character_name')
         new_character_description = request.form.get('new_character_description')
+        world_id = request.form.get("world_id")
 
         if current_user.is_authenticated:
             new_character = Character(
                 name=new_character_name,
                 description=new_character_description,
-                world_id=world_id if world_id is not None else None,
+                world_id=world_id if world_id else None,
                 user_id=current_user.id
             )
-
+            print(world_id if world_id else None)
+            print(world_id)
             db.session.add(new_character)
             try:
                 db.session.commit()
                 flash('Character successfully added!', 'success')
-            except IntegrityError:
+            except IntegrityError as ie:
+                print(ie)
                 db.session.rollback()
                 flash('Error adding character. Please try again.', 'error')
 
-            if world_id is not None:
+            if world_id:
                 return redirect(url_for('world_detail', world_id=world_id))
             else:
                 return redirect(url_for('character_list')) 
@@ -246,10 +248,11 @@ def remove_character(character_id):
 def character_list():
     characters = Character.query.all()
     name = request.args.get('name')
+    worlds = World.query.all()
     if name:
-        return render_template('character_list.html', characters=characters, races=races, name=name)
+        return render_template('character_list.html', characters=characters, races=races, name=name, worlds = worlds)
     else:
-        return render_template('character_list.html', characters=characters, races=races)
+        return render_template('character_list.html', characters=characters, races=races, worlds = worlds)
 
 @app.route('/edit_character/<int:character_id>', methods=['GET', 'POST'])
 @login_required
@@ -296,15 +299,29 @@ def update_plot_data(world_id):
     
     if request.method == 'POST':
         main_quest = request.form.get('main_quests')
+        if main_quest:
+            world.main_quests = main_quest
         
-        plot_data = PlotData.query.filter_by(world_id=world.id).first()
+        side_quest = request.form.get('side_quests')
+        if side_quest:
+            world.side_quests = side_quest
 
-        if plot_data:
-            plot_data.main_quests = main_quest
-        else:
-            plot_data = PlotData(main_quests=main_quest, world=world)
-
-        db.session.add(plot_data)
+        plot_hook = request.form.get('plot_hooks')
+        if plot_hook:
+            world.plot_hooks = plot_hook
+        
+        character_quest = request.form.get('character_quests')
+        if character_quest:
+            world.character_quests = character_quest
+        
+        fun_twist = request.form.get('fun_twists')
+        if fun_twist:
+            world.fun_twists = fun_twist
+        
+        big_bad_evil_guy = request.form.get('big_bad_evil_guys')
+        if big_bad_evil_guy:
+            world.big_bad_evil_guys = big_bad_evil_guy
+        
         db.session.commit()
 
         return redirect(url_for('plots', world_id=world_id))
@@ -342,13 +359,13 @@ def register():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    edit_profile_form = EditProfileForm()
-    change_password_form = ChangePasswordForm()
-
+    change_profile_form = ChangeProfileForm()
+    print("TEST")
     if request.method == 'POST':
-        if 'edit_profile' in request.form:
-            if edit_profile_form.validate_on_submit():
-                new_username = edit_profile_form.new_username.data
+        if change_profile_form.validate_on_submit():
+            new_username = change_profile_form.new_username.data
+            print(new_username)
+            if new_username:
                 current_user.username = new_username
                 try:
                     db.session.commit()
@@ -359,13 +376,11 @@ def profile():
                     print('Error updating username. Please choose another.')
                     flash('Error updating username. Please choose another.', 'error')
 
-        elif 'change_password' in request.form:
-            if change_password_form.validate_on_submit():
-                # Update password
-                current_password = change_password_form.current_password.data
-                new_password = change_password_form.new_password.data
-                confirm_new_password = change_password_form.confirm_new_password.data
+            current_password = change_profile_form.current_password.data
+            new_password = change_profile_form.new_password.data
+            confirm_new_password = change_profile_form.confirm_new_password.data
 
+            if current_password:
                 if current_user.check_password(current_password):
                     if new_password == confirm_new_password:
                         current_user.set_password(new_password)
@@ -376,7 +391,7 @@ def profile():
                 else:
                     flash('Current password is incorrect.', 'error')
 
-    return render_template('profile.html', edit_profile_form=edit_profile_form, change_password_form=change_password_form)
+    return render_template('profile.html', change_profile_form=change_profile_form)
 
 @app.route('/delete_account', methods=['POST'])
 @login_required

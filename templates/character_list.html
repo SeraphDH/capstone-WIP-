@@ -6,14 +6,25 @@
         <ul class="character-list">
             {% for character in characters %}
                 <li>
-                    <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
-                    <!-- Button for removing the character -->
-                    <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to remove this character?');">
-                        <button type="submit">Remove Character</button>
+                    <form method="post" action="{{ url_for('remove_character', character_id=character.id) }}" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove this character?');">X</button>
                     </form>
+                    <a href="{{ url_for('character_detail', character_id=character.id) }}">{{ character.name }}</a>
                 </li>
             {% endfor %}
         </ul>
+        <div class="random-name-container">
+            <form class="random-name-form" method="post" action="{{ url_for('random_name') }}">
+                <p>Need Name Inspiration? Use the selector below to pick a D&D race and autofill a fitting name!</p>
+                <select id="race" name="race">
+                    {% for race in races %}
+                        <option value="{{race}}">{{race}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="random-name-button">Use Race!</button>
+            </form>
+        </div>
         <form class="add-character-form" method="post" action="{{ url_for('add_character') }}">
             <label for="new_character_name">New Character Name:</label>
             {% if name %}
@@ -26,26 +37,11 @@
             <select id="world_id" name="world_id">
                 <option value="" selected>Not associated with any world</option>
                 {% for world in worlds %}
-                    {% if current_world and world.id == current_world.id %}
-                        <option value={{world.id}} selected="true">
-                    {% else %}
-                        <option value={{world.id}}>
-                    {% endif %}
-                        {{world.name}}
-                        </option>
+                    <option value={{world.id}}>{{world.name}}</option>
                 {% endfor %}
             </select>
             <br>
             <button type="submit" name="add">Add Character</button>
-        </form>
-        <form class="random-name-form" method="post" action="{{ url_for('random_name') }}">
-            <p>Looking for name ideas?</p>
-            <select id="race" name="race">
-                {% for race in races %}
-                    <option value="{{race}}">{{race}}</option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="random-name-button">Click Here!</button>
         </form>
     </div>
 

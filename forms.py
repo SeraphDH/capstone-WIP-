@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, Optional
 from flask_login import current_user
 
 class RegistrationForm(FlaskForm):
@@ -9,15 +9,13 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
-class EditProfileForm(FlaskForm):
-    new_username = StringField('New Username', validators=[DataRequired(), Length(min=2, max=20)])
-    submit = SubmitField('Update Username')
-
-class ChangePasswordForm(FlaskForm):
-    current_password = PasswordField('Current Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=6)])
-    confirm_new_password = PasswordField('Confirm New Password', validators=[DataRequired(), EqualTo('new_password')])
-    submit = SubmitField('Update Password')
+class ChangeProfileForm(FlaskForm):
+    current_password = PasswordField('Current Password', validators=[Optional()])
+    new_password = PasswordField('New Password', validators=[Length(min=6), Optional()])
+    confirm_new_password = PasswordField('Confirm New Password', validators=[EqualTo('new_password'), Optional()])
+    submit = SubmitField('Update Profile')
+    current_user = StringField('Username', [Optional()])
+    new_username = StringField('New Username', validators=[Length(min=2, max=20), Optional()])
 
     def validate_current_password(self, field):
         if not current_user.check_password(field.data):

@@ -3,6 +3,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script src="/static/js/toggleEdit.js"></script>
     <div class="plots_container">
         <h2>
             {% if current_world %}
@@ -23,15 +24,59 @@
                         </option>
                 {% endfor %}
             </select>
-            <button type="submit"></button>
+            <button type="submit" name="world_select">Select World Info</button>
         </form>
         {% if current_world %}
             <form class="plots_data" action="/update_plot_data/{{current_world.id}}" method="post">
-                <label>Main Quests</label>
+                <div class="main_quests">
+                    <label>Main Quests</label>
+                    <br>
+                    <textarea class="plot_text" readonly="true" id="main_quests" name="main_quests" value="{{current_world.main_quests}}">{{current_world.main_quests}}</textarea>
+                    <button type="submit" class="plot_button" id="submit_main_quests" name="submit_main_quests">Submit</button>
+                    <button type="button" class="plot_button" id="main_quests_edit" name="main_quests" onclick="toggleEdit('main_quests')" value="edit">Edit</button>
+                </div>
                 <br>
-                <input type="text" id="main_quests" name="main_quests">
-                <button type="submit" id="submit_main_quests" name="submit_main_quests">Submit</button>
+                <div class="side_quests">
+                    <label>Side Quests</label>
+                    <br>
+                    <textarea class="plot_text" readonly="true" id="side_quests" name="side_quests" value="{{current_world.side_quests}}">{{current_world.side_quests}}</textarea>
+                    <button type="submit" class="plot_button" id="submit_side_quests" name="submit_side_quests">Submit</button>
+                    <button type="button" class="plot_button" id="side_quests_edit" name="side_quests" onclick="toggleEdit('side_quests')" value="edit">Edit</button>
+                </div>
+                <br>
+                <div class="plot_hooks">
+                    <label>Plot Hooks</label>
+                    <br>
+                    <textarea class="plot_text" readonly="true" id="plot_hooks" name="plot_hooks" value="{{current_world.plot_hooks}}">{{current_world.plot_hooks}}</textarea>
+                    <button type="submit" class="plot_button" id="submit_plot_hooks" name="submit_plot_hooks">Submit</button>
+                    <button type="button" class="plot_button" id="plot_hooks_edit" name="plot_hooks" onclick="toggleEdit('plot_hooks')" value="edit">Edit</button>
+                </div>
+                <br>
+                <div class="character_quests">
+                    <label>Character Quests</label>
+                    <br>
+                    <textarea class="plot_text" readonly="true" id="character_quests" name="character_quests" value="{{current_world.character_quests}}">{{current_world.character_quests}}</textarea>
+                    <button type="submit" class="plot_button" id="submit_character_quests" name="submit_character_quests">Submit</button>
+                    <button type="button" class="plot_button" id="character_quests_edit" name="character_quests" onclick="toggleEdit('character_quests')" value="edit">Edit</button>
+                </div>
+                <br>
+                <div class="fun_twists">
+                    <label>Fun Twists</label>
+                    <br>
+                    <textarea class="plot_text" readonly="true" id="fun_twists" name="fun_twists" value="{{current_world.fun_twists}}">{{current_world.fun_twists}}</textarea>
+                    <button type="submit" class="plot_button" id="submit_fun_twists" name="submit_fun_twists">Submit</button>
+                    <button type="button" class="plot_button" id="fun_twists_edit" name="fun_twists" onclick="toggleEdit('fun_twists')" value="edit">Edit</button>
+                </div>
+                <br>
+                <div class="big_bad_evil_guy">
+                    <label>Big Bad Evil Guy</label>
+                    <br>
+                    <textarea class="plot_text" readonly="true" id="big_bad_evil_guy" name="big_bad_evil_guy" value="{{current_world.big_bad_evil_guy}}">{{current_world.big_bad_evil_guy}}</textarea>
+                    <button type="submit" class="plot_button" id="submit_big_bad_evil_guy" name="submit_big_bad_evil_guy">Submit</button>
+                    <button type="button" class="plot_button" id="big_bad_evil_guy_edit" name="bbeg" onclick="toggleEdit('big_bad_evil_guy')" value="edit" >Edit</button>
+                </div>
             </form>
+            
         {% endif %}
     </div>
 {% endblock %}

@@ -1,11 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
-from models import db, World, Character, User
-from forms import RegistrationForm, EditProfileForm, ChangePasswordForm
 import json, random
 
 app = Flask(__name__)

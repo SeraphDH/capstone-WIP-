@@ -3,6 +3,7 @@ body {
     padding: 0;
     background-color: #343a40;
     color: #fff;
+
 }
 
 h1 {
@@ -223,7 +224,7 @@ h1 {
     font-size: 1.1em;
 }
 
-.edit-form, .random-name-button, .add-character-form button, .add-world-form button, .remove-button {
+.edit-form, .random-name-button, .add-character-form button, .add-world-form button, .remove-button, .select_world_form button {
     background-color: #232222;
     color: #fff;
     border: none;
@@ -348,7 +349,7 @@ h1 {
     margin-left: 10px;
 }
 
-.world_container button[name="delete"], .world_container button[name="add"] {
+.world_container button[name="delete"], .world_container button[name="add"], .character_info button[class="remove_character"] {
     background-color: #232222;
     color: #fff;
     border: none;
@@ -359,7 +360,7 @@ h1 {
     cursor: pointer;
 }
 
-.world_container button[name="delete"]:hover {
+.world_container button[name="delete"]:hover, .character_info button[class="remove_character"]:hover {
     background-color: #c82333;
 }
 
@@ -452,4 +453,48 @@ h1 {
 
 .plots_container form label {
     font-size: larger;
+}
+
+.plot_text {
+    width: 865px;
+    background-color: #292d32;
+    color: white;
+    font-size: 18px;
+    max-width: 100%;
+    resize: vertical;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.plot_button {
+    background-color: #232222;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.plot_button[value="edit"] {
+    background-color: #232222;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.plot_button[value="cancel"] {
+    background-color: #c82333;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.plot_button:hover, .plots_container button[name="world_select"]:hover {
+    background-color: #565e64;
 }
