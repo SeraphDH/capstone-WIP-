@@ -3,7 +3,6 @@ body {
     padding: 0;
     background-color: #343a40;
     color: #fff;
-
 }
 
 h1 {
@@ -475,7 +474,16 @@ h1 {
     margin-top: 10px;
 }
 
-.plot_button[value="edit"] {
+.upload_image, .file_button {
+    background-color: #232222;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.plot_button[value="edit"], .save_character {
     background-color: #232222;
     color: #fff;
     border: none;
@@ -495,6 +503,44 @@ h1 {
     margin-top: 10px;
 }
 
-.plot_button:hover, .plots_container button[name="world_select"]:hover {
+.plot_button:hover, .plots_container button[name="world_select"]:hover, .save_character:hover {
     background-color: #565e64;
 }
+
+.character_portrait {
+    max-width: 1000px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.character_sheet {
+    width: 45%;
+    max-width: 1000px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.character-content {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 45%;
+}
+
+.character-container {
+    position: relative;
+}
+
+.character_info {
+    width: 45%;
+    max-width: 1000px;
+    background-color: #292d32;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+

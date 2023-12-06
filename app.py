@@ -6,11 +6,20 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 from models import *
 from forms import *
-import requests, json
+import requests, json, os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SECRET_KEY'] = 'your_secret_key'
+UPLOAD_FOLDER = 'static/images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
@@ -275,6 +284,34 @@ def edit_character(character_id):
         return render_template('edit_character.html', character=character)
 
     flash('You do not have permission to edit this character.', 'error')
+    return redirect(url_for('character_list'))
+
+@app.route('/upload_image/<int:character_id>', methods=['POST'])
+@login_required
+def upload_image(character_id):
+    character = Character.query.get(character_id)
+
+    if character and current_user.id == character.user_id:
+        if 'character_image' in request.files:
+            file = request.files['character_image']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], f'{character_id}_{filename}')
+
+                # Ensure the directory exists
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+                file.save(file_path)
+
+                character.image_path = file_path
+                db.session.commit()
+                flash('Image successfully uploaded!', 'success')
+            else:
+                flash('Invalid file format. Please upload a valid image file.', 'error')
+
+        return redirect(url_for('character_detail', character_id=character.id))
+
+    flash('You do not have permission to upload an image for this character.', 'error')
     return redirect(url_for('character_list'))
 
 @app.route('/plots', methods=['GET', 'POST'])
