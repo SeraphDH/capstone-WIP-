@@ -43,5 +43,6 @@ class Character(db.Model):
     world_id = db.Column(db.Integer, db.ForeignKey('world.id'), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    image_path = db.Column(db.String(255), nullable=True)
 
 

@@ -303,6 +303,9 @@ def upload_image(character_id):
 
                 file.save(file_path)
 
+                # Print the image path for debugging
+                print("Image Path:", file_path)
+
                 character.image_path = file_path
                 db.session.commit()
                 flash('Image successfully uploaded!', 'success')

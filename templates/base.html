@@ -36,7 +36,7 @@
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('worlds') }}">Worlds</a></li>
             <li><a href="{{ url_for('character_list') }}">Characters</a></li>
-            <a href="{{ url_for('plots') }}">Plots</a>
+            <li><a href="{{ url_for('plots') }}">Plots</a></li>
             {% if current_user.is_authenticated %}
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
